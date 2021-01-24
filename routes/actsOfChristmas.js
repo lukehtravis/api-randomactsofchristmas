@@ -1,4 +1,5 @@
 const express = require("express");
+const winston = require("winston");
 const router = express.Router();
 const {
   ActOfChristmas,
@@ -11,6 +12,12 @@ router.get("/", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
+  const { error } = validateActOfChristmas(req.body);
+  if (error) {
+    winston.error(error);
+    return res.status(400).send(error.details[0].message);
+  }
+
   let act = new ActOfChristmas({
     lat: req.body.lat,
     long: req.body.long,
