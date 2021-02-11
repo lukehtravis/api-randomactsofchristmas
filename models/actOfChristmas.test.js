@@ -6,14 +6,14 @@ describe("the validateActOfChristmas function", () => {
       lat: 37.8614,
       long: -122.256815,
       description: "Another nuther Test",
-      title: "Postman nuther nuther nuther test",
+      name: "Postman nuther nuther nuther test",
     };
     expect(validateActOfChristmas(actOfChristmas)).toMatchObject({
       value: {
         lat: 37.8614,
         long: -122.256815,
         description: "Another nuther Test",
-        title: "Postman nuther nuther nuther test",
+        name: "Postman nuther nuther nuther test",
       },
     });
   });
@@ -22,7 +22,7 @@ describe("the validateActOfChristmas function", () => {
       lat: 37.8614,
       long: "-12m2.256815",
       description: "Another nuther Test",
-      title: "Postman nuther nuther nuther test",
+      name: "Postman nuther nuther nuther test",
     };
 
     expect(validateActOfChristmas(badActOfChristmas)).toHaveProperty("error");

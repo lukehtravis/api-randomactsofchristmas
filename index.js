@@ -1,5 +1,4 @@
 const express = require("express");
-require("./startup/db")();
 const app = express();
 require("./startup/routes")(app);
 require("./startup/logging")();

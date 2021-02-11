@@ -1,10 +1,10 @@
 const winston = require("winston");
-require("winston-mongodb");
+var Postgres = require("winston-postgres").Postgres;
 require("express-async-errors");
 module.exports = function () {
   process.on("uncaughtException", (exception) => {
     console.log("Ah snap!. An uncaught exception. Something broke in node");
-    console.log(rejection);
+    console.log(exception);
     winston.error(exception.message, exception);
     process.exit(1);
   });
@@ -19,9 +19,4 @@ module.exports = function () {
   });
 
   winston.add(new winston.transports.File({ filename: "logfile.log" }));
-  winston.add(
-    new winston.transports.MongoDB({
-      db: "mongodb://localhost/randomactsofchristmasdb",
-    })
-  );
 };
