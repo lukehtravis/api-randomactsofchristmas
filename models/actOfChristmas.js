@@ -1,5 +1,6 @@
 const { pool } = require("../startup/dbconfig");
 const Joi = require("joi");
+const winston = require("winston");
 const getActs = (request, response) => {
   pool.query("SELECT * FROM christmasacts", (error, results) => {
     if (error) {
@@ -12,17 +13,16 @@ const getActs = (request, response) => {
 
 const createActOfChristmas = (request, response) => {
   const { error } = validateActOfChristmas(request.body);
-
   if (error) {
     winston.error(error);
     return response.status(400).send(error.details[0].message);
   }
 
-  const { name, lat, long, description } = request.body;
+  const { name, latitude, longitude, description } = request.body;
 
   pool.query(
     "INSERT INTO christmasacts (name, latitude, longitude, description) VALUES ($1, $2, $3, $4)",
-    [name, lat, long, description],
+    [name, latitude, longitude, description],
     (error, results) => {
       if (error) {
         throw error;
@@ -34,8 +34,8 @@ const createActOfChristmas = (request, response) => {
 
 function validateActOfChristmas(newAct) {
   const schema = Joi.object({
-    lat: Joi.number().required(),
-    long: Joi.number().required(),
+    latitude: Joi.number().required(),
+    longitude: Joi.number().required(),
     description: Joi.string().required(),
     name: Joi.string().required(),
   });
