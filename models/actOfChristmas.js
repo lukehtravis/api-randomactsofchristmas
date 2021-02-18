@@ -25,6 +25,7 @@ const createActOfChristmas = (request, response) => {
     [name, latitude, longitude, description],
     (error, results) => {
       if (error) {
+        response.status(400).send(error);
         throw error;
       }
       response.status(201).send(`Act of christmas added: ${results}`);
